@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace CodeBase
 {
@@ -14,10 +15,17 @@ namespace CodeBase
         private Weapon _weapon;
         private NavMeshAgent _navMesh;
         private Camera _mainCamera;
+        private PlayerControls _playerInput;
 
         public event Action WaypointReached;
 
         private void Start()
+        {
+            GetComponents();
+            ActivateInputSystem();
+        }
+
+        private void GetComponents()
         {
             _mainCamera = Camera.main;
             _navMesh = GetComponent<NavMeshAgent>();
@@ -25,16 +33,24 @@ namespace CodeBase
             _weapon = GetComponent<Weapon>();
         }
 
+        private void ActivateInputSystem()
+        {
+            _playerInput = new PlayerControls();
+            _playerInput.Enable();
+            _playerInput.Player.Click.performed += Clicked;
+        }
+
+        private void Clicked(InputAction.CallbackContext _)
+        {
+            if (Physics.Raycast(
+                _mainCamera.ScreenPointToRay(_playerInput.Player.Position.ReadValue<Vector2>()),
+                out var hit))
+                _weapon.Shoot(hit.point);
+        }
+
         public void SetPosition(Vector3 startPosition) => 
             transform.position = startPosition;
 
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-                if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition), out var hit))
-                    _weapon.Shoot(hit.point);
-        }
-        
         public void SetNavMeshPosition(Vector3 position)
         {
             _navMesh.SetDestination(position);
