@@ -6,7 +6,7 @@ namespace CodeBase.Bullets
 {
     public class BulletsPool
     {
-        private List<Bullet> _bullets = new List<Bullet>();
+        private readonly List<Bullet> _bullets = new List<Bullet>();
         
         public void Initialize(Bullet bulletPrefab, int poolSize)
         {
@@ -18,9 +18,7 @@ namespace CodeBase.Bullets
             }
         }
 
-        public Bullet GetBullet()
-        {
-            return _bullets.FirstOrDefault(bullet1 => !bullet1.isActiveAndEnabled);
-        }
+        public Bullet GetBullet() => 
+            _bullets.FirstOrDefault(bullet => !bullet.isActiveAndEnabled);
     }
 }

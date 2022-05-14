@@ -10,14 +10,16 @@ namespace CodeBase
     {
         private const float TimeDelay = 0.1f;
         private const float DeltaDistance = 1.5f;
-        
+        private const float RotationTime = 2f;
+
+        private Camera _mainCamera;
+        private NavMeshAgent _navMesh;
         private PlayerAnimator _playerAnimator;
         private Weapon _weapon;
-        private NavMeshAgent _navMesh;
-        private Camera _mainCamera;
         private PlayerControls _playerInput;
-
+        
         public event Action WaypointReached;
+        public event Action RotateCompleted;
 
         private void Start()
         {
@@ -72,6 +74,19 @@ namespace CodeBase
             
             _playerAnimator.Idle();
             WaypointReached?.Invoke();
+        }
+
+        public IEnumerator Rotate(Quaternion to)
+        {
+            float timer = 0f;
+            
+            while (timer < RotationTime)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, to, timer / RotationTime);
+                timer += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            RotateCompleted?.Invoke();
         }
     }
 }

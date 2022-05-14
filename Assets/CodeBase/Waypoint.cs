@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace CodeBase
@@ -10,24 +11,45 @@ namespace CodeBase
         private int _diedEnemiesCounter;
 
         public event Action LocationCleared;
-        
+        public event Action<Enemy> EnemyDied;
+
         public void Initialize()
         {
-            _enemiesCount = _enemies.Length;
-            _diedEnemiesCounter = 0;
-
-            foreach (var enemy in _enemies) 
-                enemy.Died += OnEnemyDied;
+            CountLiveEnemies();
+            CheckLocationIsCleared();
         }
+
+        private void CheckLocationIsCleared()
+        {
+            if (IsLocationClear())
+                LocationCleared?.Invoke();
+        }
+
+        private void CountLiveEnemies()
+        {
+            foreach (Enemy enemy in _enemies)
+                if (enemy.isActiveAndEnabled)
+                {
+                    enemy.Died += OnEnemyDied;
+                    _enemiesCount++;
+                }
+        }
+
+        public bool IsLocationClear() => 
+            _diedEnemiesCounter == _enemiesCount;
 
         private void OnEnemyDied()
         {
             _diedEnemiesCounter++;
-            if (IsLocationCleared())
-                LocationCleared?.Invoke();
+
+            Enemy aliveEnemy = TryGetLiveEnemy();
+            if (aliveEnemy != null)
+                EnemyDied?.Invoke(aliveEnemy);
+
+            CheckLocationIsCleared();
         }
 
-        public bool IsLocationCleared() => 
-            _diedEnemiesCounter == _enemiesCount;
+        public Enemy TryGetLiveEnemy() => 
+            _enemies.FirstOrDefault(enemy => enemy.isActiveAndEnabled);
     }
 }
