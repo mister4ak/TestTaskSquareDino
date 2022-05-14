@@ -1,4 +1,5 @@
 using System.Collections;
+using CodeBase.UI;
 using UnityEngine;
 
 namespace CodeBase
@@ -14,13 +15,20 @@ namespace CodeBase
         private Quaternion _lookAt;
         private Waypoint _currentWaypoint;
         private IEnumerator _rotateCoroutine;
+        
+        private bool IsLocationClear => _waypoints[_currentWaypointIndex].IsLocationClear;
 
         private void Awake()
         {
             _player.SetPosition(_waypoints[_currentWaypointIndex].transform.position);
-            _gameUI.GameStarted += StartGame;
+            Subscribe();
+        }
+
+        private void Subscribe()
+        {
             _player.WaypointReached += CheckLocation;
             _player.RotateCompleted += () => _isPlayerRotated = false;
+            _gameUI.GameStarted += StartGame;
         }
 
         private void StartGame()
@@ -31,33 +39,21 @@ namespace CodeBase
 
         private void CheckLocation()
         {
-            _currentWaypoint = _waypoints[_currentWaypointIndex];
-            
-            _currentWaypoint.LocationCleared += OnLocationCleared;
-            _currentWaypoint.Initialize();
-            
-            if (IsLocationClear() == false)
+            InitializeCurrentWaypoint();
+
+            if (IsLocationClear == false)
             {
                 RotatePlayer(_currentWaypoint.TryGetLiveEnemy());
                 _currentWaypoint.EnemyDied += RotatePlayer;
             }
         }
 
-        private void OnLocationCleared()
+        private void InitializeCurrentWaypoint()
         {
-            ClearPassedLocation();
-            UpdateCurrentWaypointIndex();
-            MoveToNextWaypoint();
+            _currentWaypoint = _waypoints[_currentWaypointIndex];
+            _currentWaypoint.LocationCleared += OnLocationCleared;
+            _currentWaypoint.Initialize();
         }
-
-        private void ClearPassedLocation()
-        {
-            _currentWaypoint.LocationCleared -= OnLocationCleared;
-            _currentWaypoint.EnemyDied -= RotatePlayer;
-        }
-
-        private void MoveToNextWaypoint() => 
-            _player.SetNavMeshPosition(_waypoints[_currentWaypointIndex].transform.position);
 
         private void RotatePlayer(Enemy aliveEnemy)
         {
@@ -72,9 +68,19 @@ namespace CodeBase
             StartCoroutine(_rotateCoroutine);
             _isPlayerRotated = true;
         }
-        
-        private bool IsLocationClear() => 
-            _waypoints[_currentWaypointIndex].IsLocationClear();
+
+        private void OnLocationCleared()
+        {
+            Unsubscribe();
+            UpdateCurrentWaypointIndex();
+            MoveToNextWaypoint();
+        }
+
+        private void Unsubscribe()
+        {
+            _currentWaypoint.LocationCleared -= OnLocationCleared;
+            _currentWaypoint.EnemyDied -= RotatePlayer;
+        }
 
         private void UpdateCurrentWaypointIndex()
         {
@@ -85,6 +91,9 @@ namespace CodeBase
             }
             _currentWaypointIndex++;
         }
+
+        private void MoveToNextWaypoint() => 
+            _player.SetNavMeshPosition(_waypoints[_currentWaypointIndex].transform.position);
 
         private void EndLevel()
         {

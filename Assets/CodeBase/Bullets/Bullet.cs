@@ -1,4 +1,5 @@
 using System;
+using CodeBase.UI;
 using UnityEngine;
 
 namespace CodeBase.Bullets
@@ -7,6 +8,7 @@ namespace CodeBase.Bullets
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
+        [SerializeField] private float _damage;
         private Vector3 _direction;
         private bool _isCollided;
         
@@ -27,7 +29,7 @@ namespace CodeBase.Bullets
                 gameObject.SetActive(false);
                 _isCollided = true;
                 if (other.gameObject.layer.Equals(Constants.EnemyLayer))
-                    other.gameObject.GetComponentInParent<Enemy>().TakeDamage();
+                    other.gameObject.GetComponentInParent<IHealth>().TakeDamage(_damage);
             }
         }
     }

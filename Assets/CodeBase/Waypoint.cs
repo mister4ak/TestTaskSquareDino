@@ -12,6 +12,8 @@ namespace CodeBase
 
         public event Action LocationCleared;
         public event Action<Enemy> EnemyDied;
+        
+        public bool IsLocationClear => _diedEnemiesCounter == _enemiesCount;
 
         public void Initialize()
         {
@@ -21,7 +23,7 @@ namespace CodeBase
 
         private void CheckLocationIsCleared()
         {
-            if (IsLocationClear())
+            if (IsLocationClear)
                 LocationCleared?.Invoke();
         }
 
@@ -34,9 +36,6 @@ namespace CodeBase
                     _enemiesCount++;
                 }
         }
-
-        public bool IsLocationClear() => 
-            _diedEnemiesCounter == _enemiesCount;
 
         private void OnEnemyDied(Enemy enemy)
         {
