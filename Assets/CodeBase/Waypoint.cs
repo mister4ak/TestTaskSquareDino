@@ -38,8 +38,9 @@ namespace CodeBase
         public bool IsLocationClear() => 
             _diedEnemiesCounter == _enemiesCount;
 
-        private void OnEnemyDied()
+        private void OnEnemyDied(Enemy enemy)
         {
+            enemy.Died -= OnEnemyDied;
             _diedEnemiesCounter++;
 
             Enemy aliveEnemy = TryGetLiveEnemy();
