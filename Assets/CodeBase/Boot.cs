@@ -7,7 +7,7 @@ namespace CodeBase
     public class Boot : MonoBehaviour
     {
         [SerializeField] private GameUI _gameUI;
-        [SerializeField] private Player _player;
+        [SerializeField] private Player.Player _player;
         [SerializeField] private Waypoint[] _waypoints;
         [SerializeField] private SceneLoader _sceneLoader;
         private int _currentWaypointIndex;
@@ -55,7 +55,7 @@ namespace CodeBase
             _currentWaypoint.Initialize();
         }
 
-        private void RotatePlayer(Enemy aliveEnemy)
+        private void RotatePlayer(Enemy.Enemy aliveEnemy)
         {
             Vector3 direction = (aliveEnemy.transform.position - _player.transform.position).normalized;
 

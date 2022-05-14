@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace CodeBase.Bullets
+namespace CodeBase.Player.Weapon.Bullets
 {
     public class BulletsPool
     {

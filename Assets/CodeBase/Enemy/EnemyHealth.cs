@@ -1,8 +1,7 @@
 ﻿using System;
-using CodeBase.UI;
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Enemy
 {
     public class EnemyHealth : MonoBehaviour, IHealth
     {

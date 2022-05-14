@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.UI
+namespace CodeBase.Enemy
 {
     public interface IHealth
     {

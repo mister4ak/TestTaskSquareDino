@@ -1,8 +1,7 @@
-using System;
-using CodeBase.UI;
+using CodeBase.Enemy;
 using UnityEngine;
 
-namespace CodeBase.Bullets
+namespace CodeBase.Player.Weapon.Bullets
 {
     public class Bullet : MonoBehaviour
     {
@@ -26,8 +25,8 @@ namespace CodeBase.Bullets
         {
             if (_isCollided == false)
             {
-                gameObject.SetActive(false);
                 _isCollided = true;
+                gameObject.SetActive(false);
                 if (other.gameObject.layer.Equals(Constants.EnemyLayer))
                     other.gameObject.GetComponentInParent<IHealth>().TakeDamage(_damage);
             }

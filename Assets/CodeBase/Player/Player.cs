@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using CodeBase.Input;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-namespace CodeBase
+namespace CodeBase.Player
 {
     public class Player : MonoBehaviour
     {
@@ -15,7 +16,7 @@ namespace CodeBase
         private Camera _mainCamera;
         private NavMeshAgent _navMesh;
         private PlayerAnimator _playerAnimator;
-        private Weapon _weapon;
+        private Weapon.Weapon _weapon;
         private PlayerControls _playerInput;
         
         public event Action WaypointReached;
@@ -32,7 +33,7 @@ namespace CodeBase
             _mainCamera = Camera.main;
             _navMesh = GetComponent<NavMeshAgent>();
             _playerAnimator = GetComponent<PlayerAnimator>();
-            _weapon = GetComponent<Weapon>();
+            _weapon = GetComponent<Weapon.Weapon>();
         }
 
         public void ActivateInput()

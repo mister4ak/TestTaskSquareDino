@@ -6,12 +6,12 @@ namespace CodeBase
 {
     public class Waypoint : MonoBehaviour
     {
-        [SerializeField] private Enemy[] _enemies;
+        [SerializeField] private Enemy.Enemy[] _enemies;
         private int _enemiesCount;
         private int _diedEnemiesCounter;
 
         public event Action LocationCleared;
-        public event Action<Enemy> EnemyDied;
+        public event Action<Enemy.Enemy> EnemyDied;
         
         public bool IsLocationClear => _diedEnemiesCounter == _enemiesCount;
 
@@ -29,7 +29,7 @@ namespace CodeBase
 
         private void CountLiveEnemies()
         {
-            foreach (Enemy enemy in _enemies)
+            foreach (Enemy.Enemy enemy in _enemies)
                 if (enemy.IsDied == false)
                 {
                     enemy.Died += OnEnemyDied;
@@ -37,19 +37,19 @@ namespace CodeBase
                 }
         }
 
-        private void OnEnemyDied(Enemy enemy)
+        private void OnEnemyDied(Enemy.Enemy enemy)
         {
             enemy.Died -= OnEnemyDied;
             _diedEnemiesCounter++;
 
-            Enemy aliveEnemy = TryGetLiveEnemy();
+            Enemy.Enemy aliveEnemy = TryGetLiveEnemy();
             if (aliveEnemy != null)
                 EnemyDied?.Invoke(aliveEnemy);
 
             CheckLocationIsCleared();
         }
 
-        public Enemy TryGetLiveEnemy() => 
+        public Enemy.Enemy TryGetLiveEnemy() => 
             _enemies.FirstOrDefault(enemy => enemy.IsDied == false);
     }
 }
