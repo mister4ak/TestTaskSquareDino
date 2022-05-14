@@ -1917,6 +1917,7 @@ GameObject:
   m_Component:
   - component: {fileID: 751525836}
   - component: {fileID: 751525835}
+  - component: {fileID: 751525837}
   m_Layer: 0
   m_Name: Boot
   m_TagString: Untagged
@@ -1943,6 +1944,7 @@ MonoBehaviour:
   - {fileID: 1290498142}
   - {fileID: 490647809}
   - {fileID: 1526624976}
+  _sceneLoader: {fileID: 751525837}
 --- !u!4 &751525836
 Transform:
   m_ObjectHideFlags: 0
@@ -1957,6 +1959,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &751525837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751525834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2669379a7e420684de859787ebf100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &818429006 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -6876798304698831567, guid: 9b51df84f642ac548a4c54118d9b96e8, type: 3}

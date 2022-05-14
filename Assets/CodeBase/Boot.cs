@@ -7,6 +7,7 @@ namespace CodeBase
         [SerializeField] private GameUI _gameUI;
         [SerializeField] private Player _player;
         [SerializeField] private Waypoint[] _waypoints;
+        [SerializeField] private SceneLoader _sceneLoader;
         private int _currentWaypointIndex;
 
         private void Awake()
@@ -25,6 +26,8 @@ namespace CodeBase
             }
 
             UpdateCurrentIndex();
+            
+            _player.ActivateInput();
         }
 
         private void UpdateCurrentIndex()
@@ -33,7 +36,8 @@ namespace CodeBase
             {
                 if (_currentWaypointIndex == _waypoints.Length - 1)
                 {
-                    Debug.Log("Stage Clear");
+                    _player.DisableInput();
+                    _sceneLoader.RestartScene();
                     return;
                 }
 

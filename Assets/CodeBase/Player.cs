@@ -22,7 +22,7 @@ namespace CodeBase
         private void Start()
         {
             GetComponents();
-            ActivateInputSystem();
+            _playerInput = new PlayerControls();
         }
 
         private void GetComponents()
@@ -33,11 +33,16 @@ namespace CodeBase
             _weapon = GetComponent<Weapon>();
         }
 
-        private void ActivateInputSystem()
+        public void ActivateInput()
         {
-            _playerInput = new PlayerControls();
             _playerInput.Enable();
             _playerInput.Player.Click.performed += Clicked;
+        }
+
+        public void DisableInput()
+        {
+            _playerInput.Player.Click.performed -= Clicked;
+            _playerInput.Disable();
         }
 
         private void Clicked(InputAction.CallbackContext _)
