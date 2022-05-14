@@ -53,6 +53,7 @@ namespace CodeBase
                 _mainCamera.ScreenPointToRay(_playerInput.Player.Position.ReadValue<Vector2>()),
                 out var hit))
                 _weapon.Shoot(hit.point);
+            //Debug.Log(hit.collider.name);
         }
 
         public void SetPosition(Vector3 startPosition) => 

@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 7877621415717387773}
   - component: {fileID: -6876798304698831567}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: EnemyReserve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +313,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.09811717
   m_Height: 0.49058586
   m_Direction: 0
   m_Center: {x: -0.24529293, y: 0, z: 0}
@@ -515,8 +515,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.31269038, y: 0.27846164, z: 0.38197833}
-  m_Center: {x: -0.15634573, y: -0.030918904, z: 0.00000012557824}
+  m_Size: {x: 0.2337183, y: 0.27846164, z: 0.38197833}
+  m_Center: {x: -0.116859004, y: -0.030918896, z: 0.00000011920929}
 --- !u!54 &967070887442895400
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1196,10 +1196,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.08486866
   m_Height: 0.33947465
   m_Direction: 0
-  m_Center: {x: 0.16973732, y: 0.01, z: 0}
+  m_Center: {x: 0.16973732, y: 0, z: 0}
 --- !u!54 &5000251893198505008
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1306,10 +1306,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.084868565
   m_Height: 0.33947426
   m_Direction: 0
-  m_Center: {x: -0.16973713, y: -0.01, z: 0}
+  m_Center: {x: -0.16973713, y: 0, z: 0}
 --- !u!54 &2627182565144074143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1714,7 +1714,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.09811641
   m_Height: 0.49058205
   m_Direction: 0
   m_Center: {x: 0.24529102, y: 0, z: 0}
@@ -2209,8 +2209,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21434592
-  m_Center: {x: 0, y: 0.1, z: -0.00088605954}
+  m_Radius: 0.09549457
+  m_Center: {x: 0, y: 0.09549457, z: 0}
 --- !u!54 &8656177866084589384
 Rigidbody:
   m_ObjectHideFlags: 0

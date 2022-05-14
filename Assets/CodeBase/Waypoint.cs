@@ -28,7 +28,7 @@ namespace CodeBase
         private void CountLiveEnemies()
         {
             foreach (Enemy enemy in _enemies)
-                if (enemy.isActiveAndEnabled)
+                if (enemy.IsDied == false)
                 {
                     enemy.Died += OnEnemyDied;
                     _enemiesCount++;
@@ -50,6 +50,6 @@ namespace CodeBase
         }
 
         public Enemy TryGetLiveEnemy() => 
-            _enemies.FirstOrDefault(enemy => enemy.isActiveAndEnabled);
+            _enemies.FirstOrDefault(enemy => enemy.IsDied == false);
     }
 }
