@@ -1,7 +1,6 @@
-using CodeBase.Enemy;
 using UnityEngine;
 
-namespace CodeBase.Player.Weapon.Bullets
+namespace CodeBase.Players.Bullets
 {
     public class Bullet : MonoBehaviour
     {

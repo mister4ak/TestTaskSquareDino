@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Locations
 {
     public class WaypointMarker : MonoBehaviour
     {

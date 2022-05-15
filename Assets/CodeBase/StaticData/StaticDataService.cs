@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeBase.Enemy;
+using CodeBase.Enemies;
 using UnityEngine;
 
 namespace CodeBase.StaticData

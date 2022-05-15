@@ -1916,8 +1916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf9b6fc76884a6d8b75506507ea5831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 5828856676896250829, guid: 89cf3ca4eec739447b9c494f5f529498, type: 3}
   _startPoint: {fileID: 1409415098}
+  _bulletsCount: 20
 --- !u!114 &5096036967705294600
 MonoBehaviour:
   m_ObjectHideFlags: 0

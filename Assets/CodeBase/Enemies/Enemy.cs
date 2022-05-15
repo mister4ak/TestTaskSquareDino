@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace CodeBase.Enemy
+namespace CodeBase.Enemies
 {
     public class Enemy : MonoBehaviour
     {
@@ -10,6 +10,7 @@ namespace CodeBase.Enemy
         
         [SerializeField] private Animator _animator;
         [SerializeField] private EnemyHealth _enemyHealth;
+        
         private Rigidbody[] _rigidbodies;
 
         public bool IsDied { get; private set; }
@@ -19,8 +20,7 @@ namespace CodeBase.Enemy
         {
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
             SetRigidbodiesKinematic(true);
-            _animator.Play("Idle");
-            
+
             _enemyHealth.HealthChanged += OnHealthChanged;
         }
 

@@ -1,11 +1,14 @@
 ﻿using System;
+using CodeBase.Enemies;
+using CodeBase.Locations;
+using CodeBase.Players;
 using UnityEngine;
 
 namespace CodeBase
 {
     public class Game
     {
-        private Player.Player _player;
+        private Player _player;
         private Location[] _locations;
         private Location _currentLocation;
         private int _currentLocationIndex;
@@ -14,7 +17,7 @@ namespace CodeBase
 
         public event Action LevelEnded;
 
-        public void StartLevel(Player.Player player, Location[] locations)
+        public void StartLevel(Player player, Location[] locations)
         {
             _player = player;
             _locations = locations;
@@ -42,7 +45,7 @@ namespace CodeBase
             _currentLocation.OnEnter();
         }
         
-        private void RotatePlayer(Enemy.Enemy liveEnemy)
+        private void RotatePlayer(Enemy liveEnemy)
         {
             Vector3 direction = (liveEnemy.transform.position - _player.transform.position).normalized;
             Quaternion lookAt = Quaternion.LookRotation(direction, Vector3.up);

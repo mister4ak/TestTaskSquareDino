@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-namespace CodeBase.Player
+namespace CodeBase.Players
 {
     public class Player : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace CodeBase.Player
         private Camera _mainCamera;
         private NavMeshAgent _navMesh;
         private PlayerAnimator _playerAnimator;
-        private Weapon.Weapon _weapon;
+        private Weapon _weapon;
         private PlayerControls _playerInput;
         private bool _isRotated;
         private IEnumerator _rotateCoroutine;
@@ -34,7 +34,7 @@ namespace CodeBase.Player
             _mainCamera = Camera.main;
             _navMesh = GetComponent<NavMeshAgent>();
             _playerAnimator = GetComponent<PlayerAnimator>();
-            _weapon = GetComponent<Weapon.Weapon>();
+            _weapon = GetComponent<Weapon>();
         }
 
         public void ActivateInput()
@@ -56,9 +56,6 @@ namespace CodeBase.Player
                 out var hit))
                 _weapon.Shoot(hit.point);
         }
-
-        public void SetPosition(Vector3 startPosition) => 
-            transform.position = startPosition;
 
         public void SetNavMeshPosition(Vector3 position)
         {
@@ -88,7 +85,7 @@ namespace CodeBase.Player
             StartCoroutine(_rotateCoroutine);
         }
 
-        public IEnumerator RotateCoroutine(Quaternion to)
+        private IEnumerator RotateCoroutine(Quaternion to)
         {
             _isRotated = true;
             float timer = 0f;

@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeBase.Enemies;
+using CodeBase.Factories;
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Locations
 {
     public class Location : MonoBehaviour
     {
         [SerializeField] private SpawnMarker[] _spawnMarkers;
         [SerializeField] private Transform _waypoint;
         private EnemyFactory _enemyFactory;
-        private List<Enemy.Enemy> _enemies;
+        private List<Enemy> _enemies;
         private int _enemiesCount;
         private int _diedEnemiesCounter;
 
@@ -18,17 +20,17 @@ namespace CodeBase
         public bool IsLocationClear => _diedEnemiesCounter == _enemiesCount;
         
         public event Action LocationCleared;
-        public event Action<Enemy.Enemy> EnemyDied;
+        public event Action<Enemy> EnemyDied;
 
         public void InitializeEnemies(EnemyFactory enemyFactory)
         {
             _enemyFactory = enemyFactory;
-            _enemies = new List<Enemy.Enemy>();
+            _enemies = new List<Enemy>();
 
             foreach (SpawnMarker spawnMarker in _spawnMarkers)
             {
                 GameObject enemy = _enemyFactory.Create(spawnMarker.enemyType, spawnMarker.transform);
-                _enemies.Add(enemy.GetComponent<Enemy.Enemy>());
+                _enemies.Add(enemy.GetComponent<Enemy>());
             }
         }
 
@@ -46,7 +48,7 @@ namespace CodeBase
         
         private void CountLiveEnemies()
         {
-            foreach (Enemy.Enemy enemy in _enemies)
+            foreach (Enemy enemy in _enemies)
                 if (enemy.IsDied == false)
                 {
                     enemy.Died += OnEnemyDied;
@@ -54,19 +56,19 @@ namespace CodeBase
                 }
         }
         
-        private void OnEnemyDied(Enemy.Enemy enemy)
+        private void OnEnemyDied(Enemy enemy)
         {
             enemy.Died -= OnEnemyDied;
             _diedEnemiesCounter++;
 
-            Enemy.Enemy aliveEnemy = TryGetLiveEnemy();
+            Enemy aliveEnemy = TryGetLiveEnemy();
             if (aliveEnemy != null)
                 EnemyDied?.Invoke(aliveEnemy);
 
             CheckLocationIsCleared();
         }
 
-        public Enemy.Enemy TryGetLiveEnemy() => 
+        public Enemy TryGetLiveEnemy() => 
             _enemies.FirstOrDefault(enemy => enemy.IsDied == false);
         
     }

@@ -1,7 +1,7 @@
-﻿using CodeBase.Enemy;
+﻿using CodeBase.Enemies;
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Locations
 {
     public class SpawnMarker : MonoBehaviour
     {

@@ -1,19 +1,19 @@
-﻿using CodeBase.Player.Weapon.Bullets;
+﻿using CodeBase.Players.Bullets;
 using UnityEngine;
 
-namespace CodeBase.Player.Weapon
+namespace CodeBase.Players
 {
     public class Weapon: MonoBehaviour
     {
-        [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Transform _startPoint;
+        [SerializeField] private int _bulletsCount;
         
         private BulletsPool _bulletsPool;
 
-        private void Start()
+        public void Construct(BulletsPool bulletsPool)
         {
-            _bulletsPool = new BulletsPool();
-            _bulletsPool.Initialize(_bulletPrefab, 20);
+            _bulletsPool = bulletsPool;
+            _bulletsPool.Initialize(_bulletsCount);
         }
 
         public void Shoot(Vector3 endPosition)

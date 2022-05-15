@@ -1,4 +1,4 @@
-﻿using CodeBase.Enemy;
+﻿using CodeBase.Enemies;
 using UnityEngine;
 
 namespace CodeBase.StaticData
