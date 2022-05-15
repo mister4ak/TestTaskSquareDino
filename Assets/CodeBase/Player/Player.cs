@@ -18,7 +18,9 @@ namespace CodeBase.Player
         private PlayerAnimator _playerAnimator;
         private Weapon.Weapon _weapon;
         private PlayerControls _playerInput;
-        
+        private bool _isRotated;
+        private IEnumerator _rotateCoroutine;
+
         public event Action WaypointReached;
         public event Action RotateCompleted;
 
@@ -78,8 +80,19 @@ namespace CodeBase.Player
             WaypointReached?.Invoke();
         }
 
-        public IEnumerator Rotate(Quaternion to)
+        public void Rotate(Quaternion to)
         {
+            if (_isRotated) 
+                StopCoroutine(_rotateCoroutine);
+            
+            _rotateCoroutine = RotateCoroutine(to);
+            
+            StartCoroutine(_rotateCoroutine);
+        }
+
+        public IEnumerator RotateCoroutine(Quaternion to)
+        {
+            _isRotated = true;
             float timer = 0f;
             
             while (timer < RotationTime)
@@ -88,7 +101,21 @@ namespace CodeBase.Player
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+            
             RotateCompleted?.Invoke();
+            _isRotated = false;
         }
+        // public IEnumerator Rotate(Quaternion to)
+        // {
+        //     float timer = 0f;
+        //     
+        //     while (timer < RotationTime)
+        //     {
+        //         transform.rotation = Quaternion.Lerp(transform.rotation, to, timer / RotationTime);
+        //         timer += Time.deltaTime;
+        //         yield return new WaitForEndOfFrame();
+        //     }
+        //     RotateCompleted?.Invoke();
+        // }
     }
 }

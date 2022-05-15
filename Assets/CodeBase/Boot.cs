@@ -1,4 +1,5 @@
 using System.Collections;
+using CodeBase.StaticData;
 using CodeBase.UI;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace CodeBase
         [SerializeField] private GameUI _gameUI;
         [SerializeField] private Player.Player _player;
         [SerializeField] private Waypoint[] _waypoints;
+        [SerializeField] private Location[] _locations;
         [SerializeField] private SceneLoader _sceneLoader;
         private int _currentWaypointIndex;
         private bool _isPlayerRotated;
@@ -21,7 +23,17 @@ namespace CodeBase
         private void Awake()
         {
             _player.SetPosition(_waypoints[_currentWaypointIndex].transform.position);
+
+            StaticDataService staticData = new StaticDataService();
+            staticData.Load();
+            EnemyFactory enemyFactory = new EnemyFactory(staticData);
+            _locations[0].InitializeEnemies(enemyFactory);
+            
             Subscribe();
+
+
+            Game game = new Game();
+            game.StartLevel(_player, _locations);
         }
 
         private void Subscribe()
@@ -63,7 +75,7 @@ namespace CodeBase
                 StopCoroutine(_rotateCoroutine);
 
             _lookAt = Quaternion.LookRotation(direction, Vector3.up);
-            _rotateCoroutine = _player.Rotate(_lookAt);
+            _rotateCoroutine = _player.RotateCoroutine(_lookAt);
             
             StartCoroutine(_rotateCoroutine);
             _isPlayerRotated = true;

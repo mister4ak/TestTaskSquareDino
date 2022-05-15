@@ -17,7 +17,7 @@ namespace CodeBase.Enemy
         public bool IsDied { get; private set; }
         public event Action<Enemy> Died;
 
-        private void Start()
+        public void Initialize()
         {
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
             SetRigidbodiesKinematic(true);
