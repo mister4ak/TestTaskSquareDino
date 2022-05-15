@@ -22,7 +22,6 @@ namespace CodeBase.Player
         private IEnumerator _rotateCoroutine;
 
         public event Action WaypointReached;
-        public event Action RotateCompleted;
 
         private void Start()
         {
@@ -56,7 +55,6 @@ namespace CodeBase.Player
                 _mainCamera.ScreenPointToRay(_playerInput.Player.Position.ReadValue<Vector2>()),
                 out var hit))
                 _weapon.Shoot(hit.point);
-            //Debug.Log(hit.collider.name);
         }
 
         public void SetPosition(Vector3 startPosition) => 
@@ -101,21 +99,8 @@ namespace CodeBase.Player
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-            
-            RotateCompleted?.Invoke();
+
             _isRotated = false;
         }
-        // public IEnumerator Rotate(Quaternion to)
-        // {
-        //     float timer = 0f;
-        //     
-        //     while (timer < RotationTime)
-        //     {
-        //         transform.rotation = Quaternion.Lerp(transform.rotation, to, timer / RotationTime);
-        //         timer += Time.deltaTime;
-        //         yield return new WaitForEndOfFrame();
-        //     }
-        //     RotateCompleted?.Invoke();
-        // }
     }
 }

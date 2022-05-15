@@ -1,4 +1,3 @@
-using System.Collections;
 using CodeBase.StaticData;
 using CodeBase.UI;
 using UnityEngine;
@@ -9,108 +8,38 @@ namespace CodeBase
     {
         [SerializeField] private GameUI _gameUI;
         [SerializeField] private Player.Player _player;
-        [SerializeField] private Waypoint[] _waypoints;
         [SerializeField] private Location[] _locations;
         [SerializeField] private SceneLoader _sceneLoader;
-        private int _currentWaypointIndex;
-        private bool _isPlayerRotated;
-        private Quaternion _lookAt;
-        private Waypoint _currentWaypoint;
-        private IEnumerator _rotateCoroutine;
         
-        private bool IsLocationClear => _waypoints[_currentWaypointIndex].IsLocationClear;
+        private Game _game;
 
         private void Awake()
         {
-            _player.SetPosition(_waypoints[_currentWaypointIndex].transform.position);
+            _player.SetPosition(_locations[0].Waypoint.position);
 
             StaticDataService staticData = new StaticDataService();
             staticData.Load();
             EnemyFactory enemyFactory = new EnemyFactory(staticData);
-            _locations[0].InitializeEnemies(enemyFactory);
-            
+
+            foreach (var location in _locations)
+            {
+                location.InitializeEnemies(enemyFactory);
+            }
+
+            _game = new Game();
             Subscribe();
-
-
-            Game game = new Game();
-            game.StartLevel(_player, _locations);
         }
 
         private void Subscribe()
         {
-            _player.WaypointReached += CheckLocation;
-            _player.RotateCompleted += () => _isPlayerRotated = false;
             _gameUI.GameStarted += StartGame;
+            _game.LevelEnded += RestartLevel;
         }
 
-        private void StartGame()
-        {
-            _player.ActivateInput();
-            CheckLocation();
-        }
+        private void StartGame() => 
+            _game.StartLevel(_player, _locations);
 
-        private void CheckLocation()
-        {
-            InitializeCurrentWaypoint();
-
-            if (IsLocationClear == false)
-            {
-                RotatePlayer(_currentWaypoint.TryGetLiveEnemy());
-                _currentWaypoint.EnemyDied += RotatePlayer;
-            }
-        }
-
-        private void InitializeCurrentWaypoint()
-        {
-            _currentWaypoint = _waypoints[_currentWaypointIndex];
-            _currentWaypoint.LocationCleared += OnLocationCleared;
-            _currentWaypoint.Initialize();
-        }
-
-        private void RotatePlayer(Enemy.Enemy aliveEnemy)
-        {
-            Vector3 direction = (aliveEnemy.transform.position - _player.transform.position).normalized;
-
-            if (_isPlayerRotated) 
-                StopCoroutine(_rotateCoroutine);
-
-            _lookAt = Quaternion.LookRotation(direction, Vector3.up);
-            _rotateCoroutine = _player.RotateCoroutine(_lookAt);
-            
-            StartCoroutine(_rotateCoroutine);
-            _isPlayerRotated = true;
-        }
-
-        private void OnLocationCleared()
-        {
-            Unsubscribe();
-            UpdateCurrentWaypointIndex();
-            MoveToNextWaypoint();
-        }
-
-        private void Unsubscribe()
-        {
-            _currentWaypoint.LocationCleared -= OnLocationCleared;
-            _currentWaypoint.EnemyDied -= RotatePlayer;
-        }
-
-        private void UpdateCurrentWaypointIndex()
-        {
-            if (_currentWaypointIndex == _waypoints.Length - 1)
-            {
-                EndLevel();
-                return;
-            }
-            _currentWaypointIndex++;
-        }
-
-        private void MoveToNextWaypoint() => 
-            _player.SetNavMeshPosition(_waypoints[_currentWaypointIndex].transform.position);
-
-        private void EndLevel()
-        {
-            _player.DisableInput();
+        private void RestartLevel() => 
             _sceneLoader.RestartScene();
-        }
     }
 }

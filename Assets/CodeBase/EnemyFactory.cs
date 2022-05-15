@@ -1,5 +1,6 @@
 ﻿using CodeBase.Enemy;
 using CodeBase.StaticData;
+using CodeBase.UI;
 using UnityEngine;
 
 namespace CodeBase
@@ -20,6 +21,12 @@ namespace CodeBase
             GameObject enemy = Object.Instantiate(enemyData.EnemyPrefab, parent.position, parent.rotation, parent);
             
             enemy.GetComponent<Enemy.Enemy>().Initialize();
+            
+            IHealth health = enemy.GetComponent<IHealth>();
+            health.Current = enemyData.Hp;
+            health.Max = enemyData.Hp;
+
+            enemy.GetComponent<EnemyUI>().Initialize(health);
             
             return enemy;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using CodeBase.UI;
 using UnityEngine;
 
 namespace CodeBase.Enemy
@@ -11,7 +10,6 @@ namespace CodeBase.Enemy
         
         [SerializeField] private Animator _animator;
         [SerializeField] private EnemyHealth _enemyHealth;
-        [SerializeField] private EnemyUI _enemyUI;
         private Rigidbody[] _rigidbodies;
 
         public bool IsDied { get; private set; }
@@ -21,20 +19,15 @@ namespace CodeBase.Enemy
         {
             _rigidbodies = GetComponentsInChildren<Rigidbody>();
             SetRigidbodiesKinematic(true);
+            _animator.Play("Idle");
             
-            InitializeHealth();
+            _enemyHealth.HealthChanged += OnHealthChanged;
         }
 
         private void SetRigidbodiesKinematic(bool isKinematic)
         {
             foreach (Rigidbody enemyRigidbody in _rigidbodies) 
                 enemyRigidbody.isKinematic = isKinematic;
-        }
-
-        private void InitializeHealth()
-        {
-            _enemyUI.Initialize(_enemyHealth);
-            _enemyHealth.HealthChanged += OnHealthChanged;
         }
 
         private void OnHealthChanged()

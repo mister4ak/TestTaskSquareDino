@@ -8,7 +8,6 @@ namespace CodeBase
         private Player.Player _player;
         private Location[] _locations;
         private Location _currentLocation;
-        private bool _isPlayerRotated;
         private int _currentLocationIndex;
 
         private bool IsLocationClear => _locations[_currentLocationIndex].IsLocationClear;
@@ -21,16 +20,10 @@ namespace CodeBase
             _locations = locations;
             
             _player.ActivateInput();
-            Subscribe();
+            _player.WaypointReached += CheckLocation;
             CheckLocation();
         }
-        
-        private void Subscribe()
-        {
-            _player.WaypointReached += CheckLocation;
-            _player.RotateCompleted += () => _isPlayerRotated = false;
-        }
-        
+
         private void CheckLocation()
         {
             InitializeCurrentLocation();
@@ -49,9 +42,9 @@ namespace CodeBase
             _currentLocation.OnEnter();
         }
         
-        private void RotatePlayer(Enemy.Enemy aliveEnemy)
+        private void RotatePlayer(Enemy.Enemy liveEnemy)
         {
-            Vector3 direction = (aliveEnemy.transform.position - _player.transform.position).normalized;
+            Vector3 direction = (liveEnemy.transform.position - _player.transform.position).normalized;
             Quaternion lookAt = Quaternion.LookRotation(direction, Vector3.up);
             _player.Rotate(lookAt);
         }
