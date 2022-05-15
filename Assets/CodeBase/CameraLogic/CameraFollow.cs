@@ -1,7 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-namespace CodeBase.Players
+namespace CodeBase.CameraLogic
 {
     public class CameraFollow : MonoBehaviour
     {

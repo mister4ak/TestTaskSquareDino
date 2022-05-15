@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeBase.Enemies;
-using CodeBase.Factories;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Logic.Markers;
 using UnityEngine;
 
-namespace CodeBase.Locations
+namespace CodeBase.Logic
 {
     public class Location : MonoBehaviour
     {

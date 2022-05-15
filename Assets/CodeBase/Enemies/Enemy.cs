@@ -10,7 +10,6 @@ namespace CodeBase.Enemies
         
         [SerializeField] private Animator _animator;
         [SerializeField] private EnemyHealth _enemyHealth;
-        
         private Rigidbody[] _rigidbodies;
 
         public bool IsDied { get; private set; }

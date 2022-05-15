@@ -1,10 +1,9 @@
 ﻿using System;
 using CodeBase.Enemies;
-using CodeBase.Locations;
 using CodeBase.Players;
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Logic
 {
     public class Game
     {

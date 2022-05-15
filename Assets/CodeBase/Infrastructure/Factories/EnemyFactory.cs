@@ -1,11 +1,11 @@
 ﻿using System;
-using CodeBase.AssetManagment;
 using CodeBase.Enemies;
-using CodeBase.StaticData;
+using CodeBase.Infrastructure.AssetManagment;
+using CodeBase.Infrastructure.StaticData;
 using CodeBase.UI;
 using UnityEngine;
 
-namespace CodeBase.Factories
+namespace CodeBase.Infrastructure.Factories
 {
     public class EnemyFactory
     {

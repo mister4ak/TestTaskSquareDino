@@ -1,7 +1,7 @@
 ﻿using CodeBase.Enemies;
 using UnityEngine;
 
-namespace CodeBase.StaticData
+namespace CodeBase.Infrastructure.StaticData
 {
     [CreateAssetMenu(fileName = "EnemyData", menuName = "Static Data/Enemy")]
     public class EnemyStaticData: ScriptableObject
@@ -10,7 +10,5 @@ namespace CodeBase.StaticData
     
         [Range(1,10)]
         public int Hp = 1;
-
-        public GameObject EnemyPrefab;
     }
 }

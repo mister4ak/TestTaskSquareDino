@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using CodeBase.Input;
+using CodeBase.Infrastructure.Input;
+using CodeBase.Players.Gun;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ namespace CodeBase.Players
         private PlayerAnimator _playerAnimator;
         private Weapon _weapon;
         private PlayerControls _playerInput;
+        
         private bool _isRotated;
         private IEnumerator _rotateCoroutine;
 

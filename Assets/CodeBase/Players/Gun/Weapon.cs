@@ -1,7 +1,7 @@
-﻿using CodeBase.Players.Bullets;
+﻿using CodeBase.Infrastructure;
 using UnityEngine;
 
-namespace CodeBase.Players
+namespace CodeBase.Players.Gun
 {
     public class Weapon: MonoBehaviour
     {

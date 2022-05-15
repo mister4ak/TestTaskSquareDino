@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeBase.AssetManagment;
+using CodeBase.Infrastructure.AssetManagment;
+using CodeBase.Players.Gun;
 
-namespace CodeBase.Players.Bullets
+namespace CodeBase.Infrastructure
 {
     public class BulletsPool
     {
         private readonly List<Bullet> _bullets = new List<Bullet>();
-        private AssetProvider _assetProvider;
+        private readonly AssetProvider _assetProvider;
 
         public BulletsPool(AssetProvider assetProvider)
         {
@@ -23,15 +24,6 @@ namespace CodeBase.Players.Bullets
                 _bullets.Add(bullet);
             }
         }
-        // public void Initialize(Bullet bulletPrefab, int poolSize)
-        // {
-        //     for (int i = 0; i < poolSize; i++)
-        //     {
-        //         Bullet bullet = Object.Instantiate(bulletPrefab);
-        //         bullet.gameObject.SetActive(false);
-        //         _bullets.Add(bullet);
-        //     }
-        // }
 
         public Bullet GetBullet() => 
             _bullets.FirstOrDefault(bullet => !bullet.isActiveAndEnabled);

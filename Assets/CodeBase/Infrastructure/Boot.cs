@@ -1,13 +1,14 @@
-using CodeBase.AssetManagment;
-using CodeBase.Factories;
-using CodeBase.Locations;
+using CodeBase.CameraLogic;
+using CodeBase.Infrastructure.AssetManagment;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.StaticData;
+using CodeBase.Logic;
 using CodeBase.Players;
-using CodeBase.Players.Bullets;
-using CodeBase.StaticData;
+using CodeBase.Players.Gun;
 using CodeBase.UI;
 using UnityEngine;
 
-namespace CodeBase
+namespace CodeBase.Infrastructure
 {
     public class Boot : MonoBehaviour
     {
@@ -24,6 +25,7 @@ namespace CodeBase
 
         private void Awake()
         {
+            _game = new Game();
             _assetProvider = new AssetProvider();
             _bulletsPool = new BulletsPool(_assetProvider);
             CreateStaticData();
@@ -31,7 +33,6 @@ namespace CodeBase
             InstantiatePlayer();
             InstantiatePlayerCamera();
 
-            _game = new Game();
             Subscribe();
         }
         
@@ -53,7 +54,7 @@ namespace CodeBase
         {
             Vector3 startPosition = _locations[0].Waypoint.position;
             Quaternion rotation = _locations[0].Waypoint.rotation;
-            //_player = Instantiate(_playerPrefab, startPosition, rotation);
+
             _player = _assetProvider
                 .Instantiate(AssetsAddress.PlayerPath, startPosition, rotation)
                 .GetComponent<Player>();
@@ -63,8 +64,6 @@ namespace CodeBase
 
         private void InstantiatePlayerCamera()
         {
-            //CameraFollow playerCamera = Instantiate(_playerCameraPrefab);
-            //playerCamera.Follow(_player.transform);
             _assetProvider.Instantiate(AssetsAddress.PlayerCameraPath)
                     .GetComponent<CameraFollow>()
                     .Follow(_player.transform);

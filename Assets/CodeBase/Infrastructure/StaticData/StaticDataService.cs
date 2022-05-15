@@ -3,7 +3,7 @@ using System.Linq;
 using CodeBase.Enemies;
 using UnityEngine;
 
-namespace CodeBase.StaticData
+namespace CodeBase.Infrastructure.StaticData
 {
     public class StaticDataService
     {

@@ -49,6 +49,9 @@ MonoBehaviour:
   _rigidbody: {fileID: 4039682402407284127}
   _speed: 15
   _damage: 1
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!65 &1495215875739474470
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
+using CodeBase.Infrastructure;
 using UnityEngine;
 
-namespace CodeBase.Players.Bullets
+namespace CodeBase.Players.Gun
 {
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
         [SerializeField] private float _damage;
+        [SerializeField] private LayerMask _enemyLayer;
         private Vector3 _direction;
         private bool _isCollided;
         
@@ -15,6 +17,7 @@ namespace CodeBase.Players.Bullets
             _direction = direction;
             _isCollided = false;
             gameObject.SetActive(true);
+            
         }
 
         private void FixedUpdate() => 
@@ -26,7 +29,7 @@ namespace CodeBase.Players.Bullets
             {
                 _isCollided = true;
                 gameObject.SetActive(false);
-                if (other.gameObject.layer.Equals(Constants.EnemyLayer))
+                if (1 << other.gameObject.layer == _enemyLayer.value)
                     other.gameObject.GetComponentInParent<IHealth>().TakeDamage(_damage);
             }
         }
